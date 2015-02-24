@@ -30,12 +30,12 @@
 	(links
 	  :initform (make-array 1 :adjustable t :fill-pointer 0))))
 
-(defun link (from_node to_node)
+(defun node_link (from_node to_node)
   (vector-push-extend to_node (slot-value from_node 'links)))
 
 (defclass graph ()
   ((nodes
-     :initform (make-hash-table))))
+     :initform (make-hash-table :test 'equal))))
 
 (defun add_node (text graph)
   (let ((n (make-instance 'node :text text)))
@@ -47,6 +47,20 @@
   (add_node "Hello World" *graph*)
   (add_node "Goodbye World" *graph*)
   (slot-value *graph* 'nodes))
+
+(defun -> (object mem)
+  (slot-value object mem))
+
+(defun <> (object mem)
+  (gethash mem object))
+
+
+(defun in_graph (graph text)
+  (if (gethash text (-> graph 'nodes)) T
+    nil))
+
+
+
 
 
 
