@@ -1,5 +1,5 @@
-(load "/home/cyborg/rouge_lisp/shelisp.lisp")
-(load "/home/cyborg/quicklisp/setup.lisp")
+(load "~/Programs/noob-has-a-lisp/shelisp.lisp")
+(load "~/quicklisp/setup.lisp")
 (ql:quickload "drakma")
 
 
@@ -32,6 +32,25 @@
 
 (defun link (from_node to_node)
   (vector-push-extend to_node (slot-value from_node 'links)))
+
+(defclass graph ()
+  ((nodes
+     :initform (make-hash-table))))
+
+(defun add_node (text graph)
+  (let ((n (make-instance 'node :text text)))
+    (setf (gethash text (slot-value graph 'nodes)) n)))
+
+
+(defun test ()
+  (defvar *graph* (make-instance 'graph))
+  (add_node "Hello World" *graph*)
+  (add_node "Goodbye World" *graph*)
+  (slot-value *graph* 'nodes))
+
+
+
+
   
 
 
